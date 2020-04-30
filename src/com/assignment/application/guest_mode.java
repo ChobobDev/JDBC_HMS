@@ -3,6 +3,8 @@ package com.assignment.application;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.*;
 import java.util.Date;
 
@@ -79,6 +81,13 @@ public class guest_mode extends JFrame {
         frame.getContentPane().add(book_room);
         frame.getContentPane().add(scp);
         lg_out.addActionListener(e -> {frame.dispose();});
+
+        book_room.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new book_form();
+            }
+        });
 
 
         frame.setVisible(true);
