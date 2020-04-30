@@ -5,7 +5,6 @@ import java.sql.*;
 
 public class show_booked {
     private static String csse = "jdbc:mysql://csse-mysql.xjtlu.edu.cn:3306/SCho18?user=SCho18&password=123";
-    public static data[][];
 
     public show_booked(String un){
         Connection conn = null;
