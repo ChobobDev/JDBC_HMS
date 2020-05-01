@@ -18,7 +18,7 @@ public class staff_checker {
                 if(pw.equals(loginreuslt.getString("password"))){
                     if(loginreuslt.getInt("is_staff")==1){
                         System.out.println("Login in Success");
-                        new guest_mode(id);
+                        new staff_mode(id);
                     }
                     else{
                         mesgbox.showMessageDialog(null,"You are not a STAFF","ERROR_MESSAGE",JOptionPane.ERROR_MESSAGE);
