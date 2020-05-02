@@ -113,8 +113,14 @@ public class regi_form extends JFrame{
                         String pst_new = passport.getText();
                         String em_new = email.getText();
                         String pn_new = phonenum.getText();
-                        new sql_save(un_new,pw_new,pst_new,em_new,pn_new);
-                        registerframe.dispose();
+                        if(pst_new.equals("")||em_new.equals("")||pn_new.equals("")){
+                            mesgbox.showMessageDialog(null,"Complete the Form","ERROR_MESSAGE",JOptionPane.ERROR_MESSAGE);
+                        }
+                        else{
+                            new sql_save(un_new,pw_new,pst_new,em_new,pn_new);
+                            registerframe.dispose();
+                        }
+
                     }
                     else{
                         mesgbox.showMessageDialog(null,"Password mismatch","ERROR_MESSAGE",JOptionPane.ERROR_MESSAGE);

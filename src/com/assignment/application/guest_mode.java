@@ -85,7 +85,7 @@ public class guest_mode extends JFrame {
         book_room.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new book_form();
+                new book_form(un);
             }
         });
 

@@ -4,21 +4,26 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
-import java.util.Calendar;
+
+
 
 
 public class book_form extends JFrame {
     private static String csse = "jdbc:mysql://csse-mysql.xjtlu.edu.cn:3306/SCho18?user=SCho18&password=123";
     public int leap_year = 0;
     public int leap_year_o = 0;
+    public int rt_int;
+    public String rt_val,rn_val;
     JFrame bookframe = new JFrame();
     JComboBox rt,rn,ci_y,ci_m,ci_d,co_y,co_m,co_d;
     JLabel title,rn_l,rt_l,ci_l,co_l,y,m,d;
-    JButton btn_select,btn_book,btn_cancel;
+    JButton btn_book,btn_cancel;
+    public Date ci_date,co_date;
+    JOptionPane mesgbox=new JOptionPane();
 
 
-    public book_form(){
-        bookframe.setSize(480,430);
+    public book_form(String un){
+        bookframe.setSize(430,380);
         bookframe.setLocationRelativeTo(null);
         bookframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         bookframe.getContentPane().setLayout(null);
@@ -39,9 +44,8 @@ public class book_form extends JFrame {
         rt.addActionListener (new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Connection conn = null;
-                int rt_int = 0;
-                String rt_val = (String) rt.getSelectedItem();
-                System.out.println(rt_val);
+                rt_int = 0;
+                rt_val = (String) rt.getSelectedItem();
                 if(rt_val=="1.Large room with double beds"){
                     rt_int = 1;
                 }
@@ -54,7 +58,6 @@ public class book_form extends JFrame {
                 else if (rt_val=="4.VIP room"){
                     rt_int = 4;
                 }
-                System.out.println(rt_int);
                 try {
                     rn.removeAllItems();
                     conn = DriverManager.getConnection(csse);
@@ -75,13 +78,19 @@ public class book_form extends JFrame {
             }
         });
 
+        rn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rn_val = (String) rn.getSelectedItem();
+            }
+        });
+
         ci_y.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ci_m.setSelectedIndex(0);
                 ci_d.removeAllItems();
                 String ciyval = (String) ci_y.getSelectedItem();
-                System.out.println(ciyval);
                 if(ciyval.equals("2020")||ciyval.equals("2024")){
                     leap_year = 1;
                 }
@@ -97,23 +106,27 @@ public class book_form extends JFrame {
                 String cimval = (String) ci_m.getSelectedItem();
                 if(cimval.equals("2")&&leap_year==1){
                     for(int i =1;i<30;i++){
-                        ci_d.addItem(i);
+                        String i_text = String.valueOf(i);
+                        ci_d.addItem(i_text);
                     }
                 }
                 else if(cimval.equals("2")){
                     for(int i =1;i<29;i++){
-                        ci_d.addItem(i);
+                        String i_text = String.valueOf(i);
+                        ci_d.addItem(i_text);
                     }
                 }
                 else if(cimval.equals("1")||cimval.equals("3")||cimval.equals("5")||cimval.equals("7")||cimval.equals("8")||cimval.equals("10")||cimval.equals("12")){
                     for(int i =1;i<32;i++){
-                        ci_d.addItem(i);
+                        String i_text = String.valueOf(i);
+                        ci_d.addItem(i_text);
                     }
 
                 }
                 else{
                     for(int i =1;i<31;i++){
-                        ci_d.addItem(i);
+                        String i_text = String.valueOf(i);
+                        ci_d.addItem(i_text);
                     }
 
                 }
@@ -126,7 +139,6 @@ public class book_form extends JFrame {
                 co_m.setSelectedIndex(0);
                 co_d.removeAllItems();
                 String coyval = (String) co_y.getSelectedItem();
-                System.out.println(coyval);
                 if(coyval.equals("2020")||coyval.equals("2024")){
                     leap_year_o = 1;
                 }
@@ -142,23 +154,27 @@ public class book_form extends JFrame {
                 String comval = (String) co_m.getSelectedItem();
                 if(comval.equals("2")&&leap_year_o==1){
                     for(int i =1;i<30;i++){
-                        co_d.addItem(i);
+                        String i_text = String.valueOf(i);
+                        co_d.addItem(i_text);
                     }
                 }
                 else if(comval.equals("2")){
                     for(int i =1;i<29;i++){
-                        co_d.addItem(i);
+                        String i_text = String.valueOf(i);
+                        co_d.addItem(i_text);
                     }
                 }
                 else if(comval.equals("1")||comval.equals("3")||comval.equals("5")||comval.equals("7")||comval.equals("8")||comval.equals("10")||comval.equals("12")){
                     for(int i =1;i<32;i++){
-                        co_d.addItem(i);
+                        String i_text = String.valueOf(i);
+                        co_d.addItem(i_text);
                     }
 
                 }
                 else{
                     for(int i =1;i<31;i++){
-                        co_d.addItem(i);
+                        String i_text = String.valueOf(i);
+                        co_d.addItem(i_text);
                     }
 
                 }
@@ -175,6 +191,8 @@ public class book_form extends JFrame {
         y = new JLabel("YYYY");
         m = new JLabel("MM");
         d = new JLabel("DD");
+        btn_cancel = new JButton("Cancel");
+        btn_book = new JButton("Book");
 
         title.setBounds(30,20,340,30);
         title.setHorizontalAlignment(JLabel.CENTER);
@@ -200,7 +218,8 @@ public class book_form extends JFrame {
         co_y.setBounds(150,220,70,30);
         co_m.setBounds(230,220,70,30);
         co_d.setBounds(310,220,70,30);
-
+        btn_book.setBounds(30,260,170,30);
+        btn_cancel.setBounds(230,260,170,30);
 
         bookframe.getContentPane().add(rt_l);
         bookframe.getContentPane().add(rn_l);
@@ -217,9 +236,61 @@ public class book_form extends JFrame {
         bookframe.getContentPane().add(co_y);
         bookframe.getContentPane().add(co_m);
         bookframe.getContentPane().add(co_d);
+        bookframe.getContentPane().add(btn_book);
+        bookframe.getContentPane().add(btn_cancel);
 
 
         bookframe.setVisible(true);
+        System.out.println(rt_int);
+        btn_book.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String room_choice = (String) rn.getSelectedItem();
+                String room_type = (String) rt.getSelectedItem();
+                String ciytext = (String) ci_y.getSelectedItem();
+                String cimtext = (String) ci_m.getSelectedItem();
+                String cidtext = (String) ci_d.getSelectedItem();
+                String cidate = ciytext+"-"+cimtext+"-"+cidtext;
+                String coytext = (String) co_y.getSelectedItem();
+                String comtext = (String) co_m.getSelectedItem();
+                String codtext = (String) co_d.getSelectedItem();
+                String codate = coytext+"-"+comtext+"-"+codtext;
+
+                if(ciytext.equals("")||cimtext.equals("")||cidtext.equals("")||coytext.equals("")||comtext.equals("")||codtext.equals("")){
+                    mesgbox.showMessageDialog(null,"Please Specify the Dates","ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
+                }
+                else if (room_type.equals("")){
+                    mesgbox.showMessageDialog(null,"Please Specify the room settings\n You can selecte skip as an option","ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
+                }
+                else{
+                    ci_date = Date.valueOf(cidate);
+                    co_date = Date.valueOf(codate);
+                    int compare = ci_date.compareTo(co_date);
+                    if(compare>0){
+                        mesgbox.showMessageDialog(null,"The check-in date should be earlier","ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else if(compare==0){
+                        mesgbox.showMessageDialog(null,"The check-out date should be different","ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else{
+                        new book_save(room_choice,rt_int,ci_date,co_date,un);
+                        bookframe.dispose();
+                    }
+
+                }
+
+
+            }
+        });
+
+        btn_cancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                bookframe.dispose();
+            }
+        });
+
 
 
 
