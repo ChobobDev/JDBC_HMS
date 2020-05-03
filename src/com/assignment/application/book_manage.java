@@ -7,6 +7,7 @@ public class book_manage extends JFrame {
     public book_manage(){
         manageframe = new JFrame("Manage Reservation");
         manageframe.setLocationRelativeTo(null);
+        manageframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 
     }
