@@ -9,6 +9,7 @@ public class book_manage extends JFrame {
         manageframe.setLocationRelativeTo(null);
         manageframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         manageframe.getContentPane().setLayout(null);
+        manageframe.setVisible(true);
 
 
 
