@@ -5,10 +5,15 @@ import javax.swing.table.DefaultTableModel;
 
 public class book_manage extends JFrame {
     JFrame manageframe;
+    JScrollPane scroll;
     JTable table_book;
+    JCheckBox jcb;
     public static DefaultTableModel model = new DefaultTableModel(new String[]{"Select","Room Number", "Check IN"}, 0);
     public book_manage(){
         manageframe = new JFrame("Manage Reservation");
+        table_book = new JTable(model);
+        scroll = new JScrollPane(table_book);
+        jcb = new JCheckBox();
         manageframe.setLocationRelativeTo(null);
         manageframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         manageframe.getContentPane().setLayout(null);
