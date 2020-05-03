@@ -8,5 +8,6 @@ public class book_manage extends JFrame {
         manageframe = new JFrame("Manage Reservation");
         manageframe.setLocationRelativeTo(null);
 
+
     }
 }
