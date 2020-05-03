@@ -14,12 +14,14 @@ public class book_form extends JFrame {
     public int leap_year_o = 0;
     public int rt_int;
     public String rt_val,rn_val;
-    JFrame bookframe = new JFrame();
+    public static JFrame bookframe = new JFrame();
     JComboBox rt,rn,ci_y,ci_m,ci_d,co_y,co_m,co_d;
     JLabel title,rn_l,rt_l,ci_l,co_l,y,m,d;
     JButton btn_book,btn_cancel;
     public Date ci_date,co_date;
     JOptionPane mesgbox=new JOptionPane();
+
+
 
 
     public book_form(String un){
@@ -275,7 +277,6 @@ public class book_form extends JFrame {
                     }
                     else{
                         new book_save(room_choice,rt_int,ci_date,co_date,un);
-                        bookframe.dispose();
                     }
 
                 }

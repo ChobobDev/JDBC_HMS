@@ -19,6 +19,7 @@ public class login_checker {
                 if(pw.equals(loginreuslt.getString("password"))){
                     System.out.println("Login in Success");
                     new guest_mode(id);
+                    new guest_table(id);
                 }
                 else{
                     mesgbox.showMessageDialog(null,"Wrong Password","ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);

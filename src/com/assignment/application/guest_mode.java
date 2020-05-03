@@ -7,22 +7,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 import java.util.Date;
+import java.util.Vector;
 
 
 public class guest_mode extends JFrame {
     private static String csse = "jdbc:mysql://csse-mysql.xjtlu.edu.cn:3306/SCho18?user=SCho18&password=123";
-
     JTable table;
     JScrollPane scp;
     JLabel un_label;
-    JButton lg_out, book_room;
-    JFrame frame = new JFrame("Sunny Isle Hotel");
-    DefaultTableModel model = new DefaultTableModel(new String[]{"Room Number", "Room Type", "Check IN","Check OUT","Food"}, 0);
+    JButton lg_out, book_room,refresh;
+    public static JFrame guestframe = new JFrame("Sunny Isle Hotel");
+    public static DefaultTableModel model = new DefaultTableModel(new String[]{"Room Number", "Room Type", "Check IN","Check OUT","Food"}, 0);
     public guest_mode(String un){
         table = new JTable(model);
         scp = new JScrollPane(table);
         Connection conn = null;
         try {
+            model.setNumRows(0);
             conn = DriverManager.getConnection(csse);
             String data = "select * from booked_room where username like'"+un+"';";
             Statement statement = conn.createStatement();
@@ -64,33 +65,42 @@ public class guest_mode extends JFrame {
         }
         table.setModel(model);
 
-        frame.setSize(800,500);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.getContentPane().setLayout(null);
+        guestframe.setSize(800,500);
+        guestframe.setLocationRelativeTo(null);
+        guestframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        guestframe.getContentPane().setLayout(null);
         un_label = new JLabel("Username : "+un);
         lg_out = new JButton("Log-out");
         book_room = new JButton("Book a Room");
+        refresh = new JButton("Refresh");
 
         un_label.setBounds(610,0,150,30);
         lg_out.setBounds(660,30,100,30);
         book_room.setBounds(30,30,150,30);
+        refresh.setBounds(530,30,100,30);
         scp.setBounds(30,100,740,300);
-        frame.getContentPane().add(un_label);
-        frame.getContentPane().add(lg_out);
-        frame.getContentPane().add(book_room);
-        frame.getContentPane().add(scp);
-        lg_out.addActionListener(e -> {frame.dispose();});
-
+        guestframe.getContentPane().add(un_label);
+        guestframe.getContentPane().add(lg_out);
+        guestframe.getContentPane().add(book_room);
+        guestframe.getContentPane().add(scp);
+        guestframe.getContentPane().add(refresh);
+        lg_out.addActionListener(e -> {guestframe.dispose();});
         book_room.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new book_form(un);
             }
         });
+        refresh.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.fireTableDataChanged();
+                new guest_mode(un);
+            }
+        });
 
 
-        frame.setVisible(true);
+        guestframe.setVisible(true);
 
     }
 }

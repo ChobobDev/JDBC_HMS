@@ -53,6 +53,12 @@ public class book_save {
                         String save = "insert into booked_room (room_num,room_type,username,check_in,check_out,food_status)"+"values('"+room_number+"','"+rt+"','"+un+"','"+ci+"','"+co+"','"+0+"');";
                         Statement st = conn.createStatement();
                         st.executeUpdate(save);
+                        String update = "update room_data SET booked_status = 1 where room_num = "+room_number+";";
+                        Statement st_up = conn.createStatement();
+                        st_up.executeUpdate(update);
+                        book_form.bookframe.dispose();
+                        new guest_mode(un);
+
 
                     }
                 }
@@ -61,6 +67,12 @@ public class book_save {
                     String save = "insert into booked_room (room_num,room_type,username,check_in,check_out,food_status)"+"values('"+room_number+"','"+rt+"','"+un+"','"+ci+"','"+co+"','"+0+"');";
                     Statement st = conn.createStatement();
                     st.executeUpdate(save);
+                    String update = "update room_data SET booked_status = 1 where room_num = "+room_number+";";
+                    Statement st_up = conn.createStatement();
+                    st_up.executeUpdate(update);
+                    book_form.bookframe.dispose();
+                    new guest_mode(un);
+
 
                 }
 
