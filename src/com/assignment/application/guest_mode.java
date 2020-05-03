@@ -5,6 +5,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.*;
 import java.util.Date;
 import java.util.Vector;
@@ -15,7 +17,7 @@ public class guest_mode extends JFrame {
     JTable table;
     JScrollPane scp;
     JLabel un_label;
-    JButton lg_out, book_room,refresh;
+    JButton lg_out, book_room,refresh,btn_manage;
     public static JFrame guestframe = new JFrame("Sunny Isle Hotel");
     public static DefaultTableModel model = new DefaultTableModel(new String[]{"Room Number", "Room Type", "Check IN","Check OUT","Food"}, 0);
     public guest_mode(String un){
@@ -73,12 +75,14 @@ public class guest_mode extends JFrame {
         lg_out = new JButton("Log-out");
         book_room = new JButton("Book a Room");
         refresh = new JButton("Refresh");
+        btn_manage = new JButton("Manage");
 
         un_label.setBounds(610,0,150,30);
         lg_out.setBounds(660,30,100,30);
         book_room.setBounds(30,30,150,30);
         refresh.setBounds(530,30,100,30);
         scp.setBounds(30,100,740,300);
+        btn_manage.setBounds(400,30,100,30);
         guestframe.getContentPane().add(un_label);
         guestframe.getContentPane().add(lg_out);
         guestframe.getContentPane().add(book_room);
@@ -98,6 +102,13 @@ public class guest_mode extends JFrame {
                 new guest_mode(un);
             }
         });
+        btn_manage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
 
 
         guestframe.setVisible(true);
