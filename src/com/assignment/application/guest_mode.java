@@ -109,6 +109,8 @@ public class guest_mode extends JFrame {
             }
         });
 
+        table.getRowSelectionAllowed();
+
 
 
         guestframe.setVisible(true);
