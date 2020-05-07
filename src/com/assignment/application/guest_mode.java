@@ -1,6 +1,7 @@
 package com.assignment.application;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,6 +13,7 @@ import java.util.Date;
 
 
 
+
 public class guest_mode extends JFrame {
     private static String csse = "jdbc:mysql://csse-mysql.xjtlu.edu.cn:3306/SCho18?user=SCho18&password=123";
     JTable table;
@@ -19,7 +21,16 @@ public class guest_mode extends JFrame {
     JLabel un_label;
     JButton lg_out, book_room,refresh,btn_manage;
     public static JFrame guestframe = new JFrame("Sunny Isle Hotel");
-    public static DefaultTableModel model = new DefaultTableModel(new String[]{"Room Number", "Room Type", "Check IN","Check OUT","Food"}, 0);
+    public static DefaultTableModel model = new DefaultTableModel(new String[]{"Select","Room Number", "Room Type", "Check IN","Check OUT","Food"}, 0);
+
+    public DefaultTableCellRenderer dcr = new DefaultTableCellRenderer(){
+        public Component getTableCellRendererComponent(JTable table,Object value, boolean chekced, String rn,String rt, String ci,String co,String food) {
+            JCheckBox box = new JCheckBox();
+            box.setSelected(((Boolean) value).booleanValue());
+            box.setHorizontalAlignment(JLabel.CENTER);
+            return box;
+        }
+    };
     public guest_mode(String un){
         table = new JTable(model);
         scp = new JScrollPane(table);
@@ -60,11 +71,15 @@ public class guest_mode extends JFrame {
                 else{
                     fs="None";
                 }
-                model.addRow(new Object[]{rn_text,rt_text,ci_text,co_text,fs});
+                model.addRow(new Object[]{false,rn_text,rt_text,ci_text,co_text,fs});
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        table.getColumn("Select").setCellRenderer(dcr);
+        JCheckBox box = new JCheckBox();
+        box.setHorizontalAlignment(JLabel.CENTER);
+        table.getColumn("Select").setCellEditor(new DefaultCellEditor(box));
         table.setModel(model);
 
         guestframe.setSize(800,500);
@@ -109,9 +124,11 @@ public class guest_mode extends JFrame {
             }
         });
 
-        table.getRowSelectionAllowed();
 
         guestframe.setVisible(true);
 
     }
+
+
+
 }
