@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.*;
 import java.util.Date;
-import java.util.Vector;
+
 
 
 public class guest_mode extends JFrame {
@@ -110,7 +110,6 @@ public class guest_mode extends JFrame {
         });
 
         table.getRowSelectionAllowed();
-
 
         guestframe.setVisible(true);
 
