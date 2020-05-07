@@ -33,7 +33,6 @@ public class guest_mode extends JFrame {
     };
     public guest_mode(String un){
         table = new JTable(model);
-        scp = new JScrollPane(table);
         Connection conn = null;
         try {
             model.setNumRows(0);
@@ -80,6 +79,7 @@ public class guest_mode extends JFrame {
         JCheckBox box = new JCheckBox();
         box.setHorizontalAlignment(JLabel.CENTER);
         table.getColumn("Select").setCellEditor(new DefaultCellEditor(box));
+        scp = new JScrollPane(table);
         table.setModel(model);
 
         guestframe.setSize(800,500);
