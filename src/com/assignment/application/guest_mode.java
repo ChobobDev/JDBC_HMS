@@ -21,16 +21,17 @@ public class guest_mode extends JFrame {
     JLabel un_label;
     JButton lg_out, book_room,refresh,btn_manage;
     public static JFrame guestframe = new JFrame("Sunny Isle Hotel");
-    public static DefaultTableModel model = new DefaultTableModel(new String[]{"Select","Room Number", "Room Type", "Check IN","Check OUT","Food"}, 0);
-
-    public DefaultTableCellRenderer dcr = new DefaultTableCellRenderer(){
-        public Component getTableCellRendererComponent(JTable table,Object value, boolean chekced, String rn,String rt, String ci,String co,String food) {
-            JCheckBox box = new JCheckBox();
-            box.setSelected(((Boolean) value).booleanValue());
-            box.setHorizontalAlignment(JLabel.CENTER);
-            return box;
+    public static DefaultTableModel model = new DefaultTableModel(new String[]{"Selected","Room Number", "Room Type", "Check IN","Check OUT","Food"}, 0){
+        public boolean isCellEditable(int i,int c){
+            switch(c){
+                case 0:
+                    return true;
+                default:
+                    return false;
+            }
         }
     };
+
     public guest_mode(String un){
         table = new JTable(model);
         Connection conn = null;
@@ -75,10 +76,10 @@ public class guest_mode extends JFrame {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        table.getColumn("Select").setCellRenderer(dcr);
         JCheckBox box = new JCheckBox();
         box.setHorizontalAlignment(JLabel.CENTER);
-        table.getColumn("Select").setCellEditor(new DefaultCellEditor(box));
+        table.getColumn("Selected").setCellRenderer(dcr);
+        table.getColumn("Selected").setCellEditor(new DefaultCellEditor(box));
         scp = new JScrollPane(table);
         table.setModel(model);
 
@@ -103,6 +104,7 @@ public class guest_mode extends JFrame {
         guestframe.getContentPane().add(book_room);
         guestframe.getContentPane().add(scp);
         guestframe.getContentPane().add(refresh);
+        guestframe.getContentPane().add(btn_manage);
         lg_out.addActionListener(e -> {guestframe.dispose();});
         book_room.addActionListener(new ActionListener() {
             @Override
@@ -120,6 +122,13 @@ public class guest_mode extends JFrame {
         btn_manage.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int row_count = table.getRowCount();
+                for( int i =0; i<row_count;i++){
+                    if(model.getValueAt(i,0).toString().equals("true")){
+                        String cancel_rn = model.getValueAt(i,1).toString();
+                        System.out.println(cancel_rn);
+                    }
+                }
 
             }
         });
@@ -128,6 +137,15 @@ public class guest_mode extends JFrame {
         guestframe.setVisible(true);
 
     }
+
+    public DefaultTableCellRenderer dcr = new DefaultTableCellRenderer(){
+        public Component getTableCellRendererComponent(Object value, boolean isSelected,boolean hasFocus,int row,int column) {
+            JCheckBox chbox = new JCheckBox();
+            chbox.setSelected(((Boolean)value).booleanValue());
+            chbox.setHorizontalAlignment(JLabel.CENTER);
+            return chbox;
+        }
+    };
 
 
 
