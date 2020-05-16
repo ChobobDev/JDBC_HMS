@@ -6,8 +6,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.sql.*;
 import java.util.Date;
 
@@ -21,7 +19,7 @@ public class guest_mode extends JFrame {
     JLabel un_label;
     JButton lg_out, book_room,refresh,btn_manage;
     public static JFrame guestframe = new JFrame("Sunny Isle Hotel");
-    public static DefaultTableModel model = new DefaultTableModel(new String[]{"Selected","Room Number", "Room Type", "Check IN","Check OUT","Food"}, 0){
+    public static DefaultTableModel model = new DefaultTableModel(new String[]{"Selected","Room Number", "Room Type", "Check IN","Check OUT","Food","Booking ID"}, 0){
         public boolean isCellEditable(int i,int c){
             switch(c){
                 case 0:
@@ -71,7 +69,8 @@ public class guest_mode extends JFrame {
                 else{
                     fs="None";
                 }
-                model.addRow(new Object[]{false,rn_text,rt_text,ci_text,co_text,fs});
+                String Booking_id = res.getString("book_id");
+                model.addRow(new Object[]{false,rn_text,rt_text,ci_text,co_text,fs,Booking_id});
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -91,7 +90,7 @@ public class guest_mode extends JFrame {
         lg_out = new JButton("Log-out");
         book_room = new JButton("Book a Room");
         refresh = new JButton("Refresh");
-        btn_manage = new JButton("Manage");
+        btn_manage = new JButton("Cancel");
 
         un_label.setBounds(610,0,150,30);
         lg_out.setBounds(660,30,100,30);
@@ -127,9 +126,12 @@ public class guest_mode extends JFrame {
                     if(model.getValueAt(i,0).toString().equals("true")){
                         String cancel_rn = model.getValueAt(i,1).toString();
                         System.out.println(cancel_rn);
+                        String bkid = model.getValueAt(i,6).toString();
+                        new book_cancel(bkid);
                     }
                 }
-
+                model.fireTableDataChanged();
+                new guest_mode(un);
             }
         });
 

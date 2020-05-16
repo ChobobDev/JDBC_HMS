@@ -50,7 +50,9 @@ public class book_save {
                     }
                     else{
                         conn = DriverManager.getConnection(csse);
-                        String save = "insert into booked_room (room_num,room_type,username,check_in,check_out,food_status)"+"values('"+room_number+"','"+rt+"','"+un+"','"+ci+"','"+co+"','"+0+"');";
+                        String bookid = rn.concat(ci.toString());
+                        bookid = bookid.replaceAll("-","");
+                        String save = "insert into booked_room (room_num,room_type,username,check_in,check_out,food_status,book_id)"+"values('"+room_number+"','"+rt+"','"+un+"','"+ci+"','"+co+"','"+0+"','"+bookid+"');";
                         Statement st = conn.createStatement();
                         st.executeUpdate(save);
                         String update = "update room_data SET booked_status = 1 where room_num = "+room_number+";";
@@ -64,7 +66,9 @@ public class book_save {
                 }
                 else{
                     conn = DriverManager.getConnection(csse);
-                    String save = "insert into booked_room (room_num,room_type,username,check_in,check_out,food_status)"+"values('"+room_number+"','"+rt+"','"+un+"','"+ci+"','"+co+"','"+0+"');";
+                    String bookid = rn.concat(ci.toString());
+                    bookid = bookid.replaceAll("-","");
+                    String save = "insert into booked_room (room_num,room_type,username,check_in,check_out,food_status,book_id)"+"values('"+room_number+"','"+rt+"','"+un+"','"+ci+"','"+co+"','"+0+"','"+bookid+"');";
                     Statement st = conn.createStatement();
                     st.executeUpdate(save);
                     String update = "update room_data SET booked_status = 1 where room_num = "+room_number+";";
