@@ -17,8 +17,8 @@ public class login_checker {
             ResultSet loginreuslt = statement.executeQuery(login);
             if(loginreuslt.next()){
                 if(pw.equals(loginreuslt.getString("password"))){
-                    System.out.println("Login in Success");
                     new guest_mode(id);
+                    conn.close();
                 }
                 else{
                     mesgbox.showMessageDialog(null,"Wrong Password","ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);

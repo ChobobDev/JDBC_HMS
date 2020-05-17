@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
-
-
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 
 public class book_form extends JFrame {
@@ -20,8 +20,8 @@ public class book_form extends JFrame {
     JButton btn_book,btn_cancel;
     public Date ci_date,co_date;
     JOptionPane mesgbox=new JOptionPane();
-
-
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    java.sql.Date current_time = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 
 
     public book_form(String un){
@@ -268,19 +268,23 @@ public class book_form extends JFrame {
                 else{
                     ci_date = Date.valueOf(cidate);
                     co_date = Date.valueOf(codate);
-                    int compare = ci_date.compareTo(co_date);
-                    if(compare>0){
-                        mesgbox.showMessageDialog(null,"The check-in date should be earlier","ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
-                    }
-                    else if(compare==0){
-                        mesgbox.showMessageDialog(null,"The check-out date should be different","ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
+                    int compare_today = ci_date.compareTo(current_time);
+                    if(compare_today<0){
+                        mesgbox.showMessageDialog(null,"The check-in date should not be earlier than today","ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
                     }
                     else{
-                        new book_save(room_choice,rt_int,ci_date,co_date,un);
+                        int compare = ci_date.compareTo(co_date);
+                        if(compare>0){
+                            mesgbox.showMessageDialog(null,"The check-in date should be earlier","ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
+                        }
+                        else if(compare==0){
+                            mesgbox.showMessageDialog(null,"The check-out date should be different","ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
+                        }
+                        else{
+                            new book_save(room_choice,rt_int,ci_date,co_date,un);
+                        }
                     }
-
                 }
-
 
             }
         });

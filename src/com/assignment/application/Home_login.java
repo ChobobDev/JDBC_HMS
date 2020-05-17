@@ -59,6 +59,9 @@ public class Home_login extends JFrame{
                 String id_val = id_input.getText();
                 String pw_val = String.valueOf(pw_input.getPassword());
                 new login_checker(id_val,pw_val);
+                id_input.setText("");
+                pw_input.setText("");
+                frame.dispose();
 
             }
         });

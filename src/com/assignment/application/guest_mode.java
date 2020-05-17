@@ -31,12 +31,13 @@ public class guest_mode extends JFrame {
     };
 
     public guest_mode(String un){
+        String user_name = un;
         table = new JTable(model);
         Connection conn = null;
         try {
             model.setNumRows(0);
             conn = DriverManager.getConnection(csse);
-            String data = "select * from booked_room where username like'"+un+"';";
+            String data = "select * from booked_room where username like'"+user_name+"';";
             Statement statement = conn.createStatement();
             ResultSet res = statement.executeQuery(data);
             while(res.next()){
@@ -72,6 +73,7 @@ public class guest_mode extends JFrame {
                 String Booking_id = res.getString("book_id");
                 model.addRow(new Object[]{false,rn_text,rt_text,ci_text,co_text,fs,Booking_id});
             }
+            res.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -86,7 +88,7 @@ public class guest_mode extends JFrame {
         guestframe.setLocationRelativeTo(null);
         guestframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         guestframe.getContentPane().setLayout(null);
-        un_label = new JLabel("Username : "+un);
+        un_label = new JLabel("Username : " + un);
         lg_out = new JButton("Log-out");
         book_room = new JButton("Book a Room");
         refresh = new JButton("Refresh");
@@ -104,18 +106,18 @@ public class guest_mode extends JFrame {
         guestframe.getContentPane().add(scp);
         guestframe.getContentPane().add(refresh);
         guestframe.getContentPane().add(btn_manage);
-        lg_out.addActionListener(e -> {guestframe.dispose();});
+        guestframe.setVisible(true);
+
         book_room.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new book_form(un);
+                new book_form(user_name);
             }
         });
         refresh.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                model.fireTableDataChanged();
-                new guest_mode(un);
+                new guest_mode(user_name);
             }
         });
         btn_manage.addActionListener(new ActionListener() {
@@ -125,18 +127,17 @@ public class guest_mode extends JFrame {
                 for( int i =0; i<row_count;i++){
                     if(model.getValueAt(i,0).toString().equals("true")){
                         String cancel_rn = model.getValueAt(i,1).toString();
-                        System.out.println(cancel_rn);
                         String bkid = model.getValueAt(i,6).toString();
                         new book_cancel(bkid);
                     }
                 }
-                model.fireTableDataChanged();
                 new guest_mode(un);
             }
         });
+        lg_out.addActionListener(e -> {
+            System.exit(0);
+        });
 
-
-        guestframe.setVisible(true);
 
     }
 
@@ -148,6 +149,13 @@ public class guest_mode extends JFrame {
             return chbox;
         }
     };
+
+    public void connection(){
+
+
+    }
+
+
 
 
 

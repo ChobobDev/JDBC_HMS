@@ -14,7 +14,6 @@ public class book_cancel {
             String delete = "delete from booked_room where book_id = "+bi+";";
             Statement st = conn.createStatement();
             st.execute(delete);
-            System.out.println(bi+"executed");
         }catch (SQLException e){
             System.out.println(e.getMessage());
         }

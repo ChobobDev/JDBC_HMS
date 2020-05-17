@@ -50,7 +50,8 @@ public class book_save {
                     }
                     else{
                         conn = DriverManager.getConnection(csse);
-                        String bookid = rn.concat(ci.toString());
+                        String rntext = String.valueOf(room_number);
+                        String bookid = rntext.concat(ci.toString());
                         bookid = bookid.replaceAll("-","");
                         String save = "insert into booked_room (room_num,room_type,username,check_in,check_out,food_status,book_id)"+"values('"+room_number+"','"+rt+"','"+un+"','"+ci+"','"+co+"','"+0+"','"+bookid+"');";
                         Statement st = conn.createStatement();
@@ -66,7 +67,8 @@ public class book_save {
                 }
                 else{
                     conn = DriverManager.getConnection(csse);
-                    String bookid = rn.concat(ci.toString());
+                    String rntext = String.valueOf(room_number);
+                    String bookid = rntext.concat(ci.toString());
                     bookid = bookid.replaceAll("-","");
                     String save = "insert into booked_room (room_num,room_type,username,check_in,check_out,food_status,book_id)"+"values('"+room_number+"','"+rt+"','"+un+"','"+ci+"','"+co+"','"+0+"','"+bookid+"');";
                     Statement st = conn.createStatement();

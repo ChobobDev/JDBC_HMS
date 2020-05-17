@@ -82,7 +82,7 @@ public class staff_mode extends JFrame{
 
         frame.setVisible(true);
 
-        lg_out.addActionListener(e -> {frame.dispose();});
+        lg_out.addActionListener(e -> {System.exit(0);});
 
     }
 }
