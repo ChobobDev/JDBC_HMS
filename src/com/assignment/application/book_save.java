@@ -34,7 +34,6 @@ public class book_save {
             else{
                 room_number = Integer.parseInt(rn);
             }
-            System.out.println(room_number);
             try {
                 conn = DriverManager.getConnection(csse);
                 String date = "select * from booked_room where room_num like'"+room_number+"';";
@@ -45,7 +44,9 @@ public class book_save {
                     Date booked_ci = date_ava.getDate("check_in");
                     int compare = ci.compareTo(booked_co);
                     int compare_2 = co.compareTo(booked_ci);
-                    if(compare<0||compare_2>0){
+                    System.out.println(compare);
+                    System.out.println(compare_2);
+                    if(compare<0||compare_2<0){
                         mesgbox.showMessageDialog(null,"This room is not available on that date","ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
                     }
                     else{

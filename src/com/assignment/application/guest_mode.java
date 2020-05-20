@@ -17,7 +17,7 @@ public class guest_mode extends JFrame {
     JTable table;
     JScrollPane scp;
     JLabel un_label;
-    JButton lg_out, book_room,refresh,btn_manage;
+    JButton lg_out, book_room,refresh,btn_manage,btn_food;
     public static JFrame guestframe = new JFrame("Sunny Isle Hotel");
     public static DefaultTableModel model = new DefaultTableModel(new String[]{"Selected","Room Number", "Room Type", "Check IN","Check OUT","Food","Booking ID"}, 0){
         public boolean isCellEditable(int i,int c){
@@ -86,13 +86,14 @@ public class guest_mode extends JFrame {
 
         guestframe.setSize(800,500);
         guestframe.setLocationRelativeTo(null);
-        guestframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        guestframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         guestframe.getContentPane().setLayout(null);
         un_label = new JLabel("Username : " + un);
         lg_out = new JButton("Log-out");
         book_room = new JButton("Book a Room");
         refresh = new JButton("Refresh");
         btn_manage = new JButton("Cancel");
+        btn_food = new JButton("Order Food");
 
         un_label.setBounds(610,0,150,30);
         lg_out.setBounds(660,30,100,30);
@@ -100,12 +101,14 @@ public class guest_mode extends JFrame {
         refresh.setBounds(530,30,100,30);
         scp.setBounds(30,100,740,300);
         btn_manage.setBounds(400,30,100,30);
+        btn_food.setBounds(660,410,100,30);
         guestframe.getContentPane().add(un_label);
         guestframe.getContentPane().add(lg_out);
         guestframe.getContentPane().add(book_room);
         guestframe.getContentPane().add(scp);
         guestframe.getContentPane().add(refresh);
         guestframe.getContentPane().add(btn_manage);
+        guestframe.getContentPane().add(btn_food);
         guestframe.setVisible(true);
 
         book_room.addActionListener(new ActionListener() {
@@ -128,7 +131,7 @@ public class guest_mode extends JFrame {
                     if(model.getValueAt(i,0).toString().equals("true")){
                         String cancel_rn = model.getValueAt(i,1).toString();
                         String bkid = model.getValueAt(i,6).toString();
-                        new book_cancel(bkid);
+                        new book_cancel(bkid,cancel_rn);
                     }
                 }
                 new guest_mode(un);
