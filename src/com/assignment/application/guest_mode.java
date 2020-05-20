@@ -18,6 +18,7 @@ public class guest_mode extends JFrame {
     JScrollPane scp;
     JLabel un_label;
     JButton lg_out, book_room,refresh,btn_manage,btn_food;
+    JOptionPane mesgbox=new JOptionPane();
     public static JFrame guestframe = new JFrame("Sunny Isle Hotel");
     public static DefaultTableModel model = new DefaultTableModel(new String[]{"Selected","Room Number", "Room Type", "Check IN","Check OUT","Food","Booking ID"}, 0){
         public boolean isCellEditable(int i,int c){
@@ -139,6 +140,32 @@ public class guest_mode extends JFrame {
         });
         lg_out.addActionListener(e -> {
             System.exit(0);
+        });
+        btn_food.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row_count = table.getRowCount();
+                int selected = 0;
+                for( int i =0; i<row_count;i++){
+                    if(model.getValueAt(i,0).toString().equals("true")){
+                        selected++;
+                    }
+                }
+                if(selected>1){
+                    mesgbox.showMessageDialog(null,"Please Select one Room at a time","ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
+                }
+                else if(selected==0){
+                    mesgbox.showMessageDialog(null,"Please Select Room to order","ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
+                }
+                else{
+                    for( int i =0; i<row_count;i++){
+                        if(model.getValueAt(i,0).toString().equals("true")){
+                            String bkid = model.getValueAt(i,6).toString();
+                            new food_form(bkid);
+                        }
+                    }
+                }
+            }
         });
 
 
