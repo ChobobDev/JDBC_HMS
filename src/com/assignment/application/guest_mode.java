@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -155,13 +156,18 @@ public class guest_mode extends JFrame {
                     mesgbox.showMessageDialog(null,"Please Select one Room at a time","ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
                 }
                 else if(selected==0){
-                    mesgbox.showMessageDialog(null,"Please Select Room to order","ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
+                    java.sql.Date current = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+                    String current_date = String.valueOf(current);
+                    current_date = current_date.replaceAll("-","");
+                    String order_id = un.concat(current_date);
+                    new food_form(order_id,0,un);
                 }
                 else{
                     for( int i =0; i<row_count;i++){
                         if(model.getValueAt(i,0).toString().equals("true")){
                             String bkid = model.getValueAt(i,6).toString();
-                            new food_form(bkid);
+                            System.out.println(bkid);
+                            new food_form(bkid,1,un);
                         }
                     }
                 }
@@ -180,10 +186,6 @@ public class guest_mode extends JFrame {
         }
     };
 
-    public void connection(){
-
-
-    }
 
 
 
