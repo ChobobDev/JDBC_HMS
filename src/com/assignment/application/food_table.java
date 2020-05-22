@@ -67,6 +67,7 @@ public class food_table {
                     mealid.add(meal_id);
                     mealname.add(meal_name);
                     chef_name.add(chef_id.get(i+1));
+                    food_form.model.addRow(new Object[]{mealid.get(j),mealname.get(j),chef_name.get(j),0});
                     model.addRow(new Object[]{mealid.get(j),mealname.get(j),chef_name.get(j),0});
                     j++;
                 }
