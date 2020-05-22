@@ -79,16 +79,11 @@ public class book_save {
                     st_up.executeUpdate(update);
                     book_form.bookframe.dispose();
                     new guest_mode(un);
-
-
                 }
-
 
             }catch (SQLException err){
                 System.out.println(err.getMessage());
             }
-
-
 
         }catch (SQLException e) {
             System.out.println(e.getMessage());

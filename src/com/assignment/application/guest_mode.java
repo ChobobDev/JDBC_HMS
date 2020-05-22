@@ -57,8 +57,11 @@ public class guest_mode extends JFrame {
                 else if (rt==3){
                     rt_text = "3.Small room with a single bed";
                 }
-                else{
+                else if (rt==4){
                     rt_text ="4.VIP room";
+                }
+                else if (rt==0){
+                    rt_text ="Food Ordered";
                 }
                 Date ci = res.getDate("check_in");
                 String ci_text = String.valueOf(ci);;
