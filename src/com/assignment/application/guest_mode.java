@@ -165,11 +165,10 @@ public class guest_mode extends JFrame {
                     String order_id = un.concat(current_date);
                     new food_form(order_id,0,un);
                 }
-                else{
+                else if (selected==1){
                     for( int i =0; i<row_count;i++){
                         if(model.getValueAt(i,0).toString().equals("true")){
                             String bkid = model.getValueAt(i,6).toString();
-                            System.out.println(bkid);
                             new food_form(bkid,1,un);
                         }
                     }
