@@ -9,7 +9,7 @@ public class book_cancel {
         Connection conn = null;
         try{
             conn = DriverManager.getConnection(csse);
-            String delete = "delete from booked_room where book_id = "+bi+";";
+            String delete = "delete from booked_room where book_id = '"+bi+"';";
             Statement st = conn.createStatement();
             st.execute(delete);
             String room_state = "select * from booked_room where room_num = "+crn+";";

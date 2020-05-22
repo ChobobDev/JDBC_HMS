@@ -18,7 +18,7 @@ public class guest_mode extends JFrame {
     JTable table;
     JScrollPane scp;
     JLabel un_label;
-    JButton lg_out, book_room,refresh,btn_manage,btn_food;
+    JButton lg_out, book_room,refresh,btn_manage,btn_food,btn_show;
     JOptionPane mesgbox=new JOptionPane();
     public static JFrame guestframe = new JFrame("Sunny Isle Hotel");
     public static DefaultTableModel model = new DefaultTableModel(new String[]{"Selected","Room Number", "Room Type", "Check IN","Check OUT","Food","Booking ID"}, 0){
@@ -89,6 +89,7 @@ public class guest_mode extends JFrame {
         scp = new JScrollPane(table);
         table.setModel(model);
 
+
         guestframe.setSize(800,500);
         guestframe.setLocationRelativeTo(null);
         guestframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -99,6 +100,7 @@ public class guest_mode extends JFrame {
         refresh = new JButton("Refresh");
         btn_manage = new JButton("Cancel");
         btn_food = new JButton("Order Food");
+        btn_show = new JButton("View Order");
 
         un_label.setBounds(610,0,150,30);
         lg_out.setBounds(660,30,100,30);
@@ -107,6 +109,7 @@ public class guest_mode extends JFrame {
         scp.setBounds(30,100,740,300);
         btn_manage.setBounds(400,30,100,30);
         btn_food.setBounds(660,410,100,30);
+        btn_show.setBounds(530,410,100,30);
         guestframe.getContentPane().add(un_label);
         guestframe.getContentPane().add(lg_out);
         guestframe.getContentPane().add(book_room);
@@ -114,6 +117,7 @@ public class guest_mode extends JFrame {
         guestframe.getContentPane().add(refresh);
         guestframe.getContentPane().add(btn_manage);
         guestframe.getContentPane().add(btn_food);
+        guestframe.getContentPane().add(btn_show);
         guestframe.setVisible(true);
 
         book_room.addActionListener(new ActionListener() {
@@ -137,6 +141,7 @@ public class guest_mode extends JFrame {
                         String cancel_rn = model.getValueAt(i,1).toString();
                         String bkid = model.getValueAt(i,6).toString();
                         new book_cancel(bkid,cancel_rn);
+                        System.out.println(bkid);
                     }
                 }
                 new guest_mode(un);
@@ -168,11 +173,44 @@ public class guest_mode extends JFrame {
                 else if (selected==1){
                     for( int i =0; i<row_count;i++){
                         if(model.getValueAt(i,0).toString().equals("true")){
-                            String bkid = model.getValueAt(i,6).toString();
-                            new food_form(bkid,1,un);
+                            if(model.getValueAt(i,1).toString().equals("0")){
+                                mesgbox.showMessageDialog(null,"Please Select Room not FOOD ORDER","ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
+                            }
+                            else{
+                                String bkid = model.getValueAt(i,6).toString();
+                                new food_form(bkid,1,un);
+                            }
+
                         }
                     }
                 }
+            }
+        });
+
+        btn_show.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row_count = table.getRowCount();
+                int selected = 0;
+                for( int i =0; i<row_count;i++){
+                    if(model.getValueAt(i,0).toString().equals("true")){
+                        selected++;
+                    }
+                    if(selected>1){
+                        mesgbox.showMessageDialog(null,"Please Select one Room at a time","ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else if(selected==1){
+                        for( int j =0; j<row_count;j++){
+                            if(model.getValueAt(i,0).toString().equals("true")){
+                                String bkbk = model.getValueAt(i,6).toString();
+                                new food_show(bkbk);
+                            }
+                        }
+                    }
+
+                }
+
+
             }
         });
 

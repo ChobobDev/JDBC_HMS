@@ -7,6 +7,11 @@ public class food_save {
     private static String csse = "jdbc:mysql://csse-mysql.xjtlu.edu.cn:3306/SCho18?user=SCho18&password=123";
     public food_save(String bkid, Date sd, String st,int c,String un){
         Connection conn = null;
+        String sd_text = String.valueOf(sd);
+        sd_text=sd_text.replace("-","");
+        String order_id = bkid.concat(sd_text);
+        order_id = order_id.concat(st);
+        order_id = order_id.replace(":","");
         int menu = food_form.Id.size();
         String na = "N/A";
         String mealid = "";
@@ -30,7 +35,7 @@ public class food_save {
         food_form.Amount.removeAll(food_form.Amount);
         try{
             conn = DriverManager.getConnection(csse);
-            String order = "insert into ordered_meal (book_id,meal_id,amount,serving_date,serving_time)"+"values('"+bkid+"','"+mealid+"','"+mealamt+"','"+sd+"','"+st+"')";
+            String order = "insert into ordered_meal (book_id,order_id,meal_id,amount,serving_date,serving_time)"+"values('"+bkid+"','"+order_id+"','"+mealid+"','"+mealamt+"','"+sd+"','"+st+"')";
             Statement statement = conn.createStatement();
             statement.executeUpdate(order);
             if(c==0){
